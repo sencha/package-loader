@@ -1,0 +1,17 @@
+{
+    "name": "package-loader",
+    "sencha": {
+        "type": "code",
+        "creator": "Sencha",
+        "summary": "Dynamic package loader",
+        "detailedDescription": "This package provides a mechanism to load additional code packages at runtime",
+        "version": "1.0.0",
+        "compatVersion": "1.0.0",
+        "format": "1",
+        "local": true,
+        "classpath": "${package.dir}/src",
+        "framework": "ext",
+        "sass": null,
+        "output": "${package.dir}/build"
+    }
+}
