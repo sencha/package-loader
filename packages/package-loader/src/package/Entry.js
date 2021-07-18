@@ -47,34 +47,56 @@ Ext.define("Ext.package.Entry", {
     },
 
     loadStyle: function () {
-        // TODO: Deal with entries in the css array on package.json
-        var metadata = this.metadata,
+        let metadata = this.metadata,
             required = metadata && metadata.required,
             css = metadata && metadata.css;
 
         if (css !== false && required !== true) {
-            this.load(this.cssUrl);
+
+            if (Array.isArray(css)) {
+                for (i = 0; i < css.length; i++) {
+                    this.load(css[i].path.replaceAll("${package.dir}/", Ext.getResourcePath('', null, this.packageName)));
+                }
+            } else {
+
+                if (css !== false && required !== true) {
+                    this.load(this.cssUrl);
+                }
+            }
         }
     },
 
     loadScript: function () {
-        var metadata = this.metadata,
+        let metadata = this.metadata,
             files = metadata && metadata.files,
             manifest = Ext.manifest,
             loadOrder = manifest && manifest.loadOrder,
             paths = [],
-            i;
+            i,
+            js = metadata.js;
 
-        // TODO: Deal with entries in the js array on package.json
         if (files && loadOrder) {
+
             for (i = 0; i < files.length; i++) {
-                paths.push(loadOrder[files[i]].path);   
+                paths.push(loadOrder[files[i]].path);
             }
             this.load(paths);
+
+        } else {
+
+            if (metadata && !metadata.included) {
+
+                if (Array.isArray(js)) {
+                    for (i = 0; i < js.length; i++) {
+                        this.load(js[i].path.replaceAll("${package.dir}/", Ext.getResourcePath('', null, this.packageName)));
+                    }
+                } else {
+                    this.load(this.jsUrl);
+                }
+
+            }
         }
-        else if (metadata && !metadata.included) {
-            this.load(this.jsUrl);
-        }
+
     },
 
     load: function (url) {
