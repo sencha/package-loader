@@ -47,7 +47,7 @@ Ext.define("Ext.package.Entry", {
     },
 
     loadStyle: function () {
-        let metadata = this.metadata,
+        var metadata = this.metadata,
             required = metadata && metadata.required,
             css = metadata && metadata.css;
 
@@ -67,7 +67,7 @@ Ext.define("Ext.package.Entry", {
     },
 
     loadScript: function () {
-        let metadata = this.metadata,
+        var metadata = this.metadata,
             files = metadata && metadata.files,
             manifest = Ext.manifest,
             loadOrder = manifest && manifest.loadOrder,
